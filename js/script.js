@@ -6,9 +6,9 @@ function showImages() {
 
     if (crushName === "vanshika") {
         images = [
-            "https://i.pinimg.com/564x/4d/9a/24/4d9a24c5ba21ad961541b5f5b7f7cad1.jpg",
-            "https://i.pinimg.com/564x/1b/43/3d/1b433d50a0c1d15eb02d25e88eb1fc11.jpg",
-            "https://i.pinimg.com/564x/1f/c4/3f/1fc43fb2e79cb66688a32f784bd13e96.jpg"
+            "images/OIP.jpeg",
+            "images/OIP2.jpeg",
+            "images/th.jpeg"
         ];
     } else if (crushName === "lisa") {
         images = [
@@ -22,15 +22,35 @@ function showImages() {
     }
 
     imageBox.innerHTML = ""; // Clear previous images
-    images.forEach(imgSrc => {
-        let card = document.createElement("div");
-        card.classList.add("card");
-        card.innerHTML = `<figure class="image"><img src="${imgSrc}" alt="Image"></figure>`;
-        imageBox.appendChild(card);
+    let delay = 500; // Delay between each image appearing
+
+    images.forEach((imgSrc, index) => {
+        setTimeout(() => {
+            let card = document.createElement("div");
+            card.classList.add("card");
+            card.innerHTML = `<figure class="image"><img src="${imgSrc}" alt="Image"></figure>`;
+            card.style.display = "block"; // Show image with delay
+            card.onclick = function () {
+                changeBackground(imgSrc);
+            };
+            imageBox.appendChild(card);
+        }, index * delay);
     });
 
     imageBox.style.display = "flex";
-    changeCompliments();
+
+    // Play Music when Images Appear
+    let music = document.getElementById("backgroundMusic");
+    if (music.paused) {
+        music.play();
+    }
+
+    changeCompliments(); // Start compliment rotation
+}
+
+function changeBackground(imgSrc) {
+    document.body.style.background = `url('${imgSrc}') no-repeat center center fixed`;
+    document.body.style.backgroundSize = "cover";
 }
 
 function changeCompliments() {
@@ -49,7 +69,7 @@ function changeCompliments() {
     }, 5000);
 }
 
-
+// Toggle Music On/Off
 function toggleMusic() {
     let music = document.getElementById("backgroundMusic");
     if (music.paused) {
@@ -59,6 +79,7 @@ function toggleMusic() {
     }
 }
 
+// Floating Hearts Animation
 document.addEventListener("DOMContentLoaded", function () {
     const heartContainer = document.querySelector(".floating-hearts");
 
